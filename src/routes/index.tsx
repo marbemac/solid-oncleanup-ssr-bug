@@ -10,30 +10,19 @@ export default function Home() {
 
       {/* comment DataComp-1 out, reload, and see terminal logs for issue. onCleanup not called for DataCompWithInnerSuspense-1 */}
       <Suspense>
-        <DataComp name="DataComp-1" wait={100} />
+        <DataComp name="DataComp-1" />
       </Suspense>
 
-      <DataCompWithInnerSuspense
-        name="DataCompWithInnerSuspense-1"
-        wait={1000}
-      />
-
-      <DataCompWithInnerSuspense
-        name="DataCompWithInnerSuspense-2"
-        wait={500}
-      />
-
-      <DataCompWithInnerSuspense
-        name="DataCompWithInnerSuspense-3"
-        wait={250}
-      />
+      <DataCompWithInnerSuspense name="DataCompWithInnerSuspense-1" />
+      <DataCompWithInnerSuspense name="DataCompWithInnerSuspense-2" />
+      <DataCompWithInnerSuspense name="DataCompWithInnerSuspense-3" />
     </main>
   );
 }
 
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const sleep = (ms: number = 100) => new Promise((r) => setTimeout(r, ms));
 
-const resource = (name: string, wait: number) => {
+const resource = (name: string, wait?: number) => {
   console.log(`call:${name}.resource`);
 
   onCleanup(() => {
@@ -49,7 +38,7 @@ const resource = (name: string, wait: number) => {
   return r;
 };
 
-const DataComp = (props: { name: string; wait: number }) => {
+const DataComp = (props: { name: string; wait?: number }) => {
   console.log(`call:${props.name}`);
 
   const [data] = resource(props.name, props.wait);
@@ -61,7 +50,7 @@ const DataComp = (props: { name: string; wait: number }) => {
   return <div>Name: {data()?.name}</div>;
 };
 
-const DataCompWithInnerSuspense = (props: { name: string; wait: number }) => {
+const DataCompWithInnerSuspense = (props: { name: string; wait?: number }) => {
   console.log(`call:${props.name}`);
 
   const [data] = resource(props.name, props.wait);
