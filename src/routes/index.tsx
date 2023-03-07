@@ -8,9 +8,9 @@ export default function Home() {
 
       <h1>Lifecycle w Suspense Debugging</h1>
 
-      {/* comment DataComp-1 out, reload, and see terminal logs for issue. onCleanup only called for DataCompWithInnerSuspense-2 */}
+      {/* comment DataComp-1 out, reload, and see terminal logs for issue. onCleanup not called for DataCompWithInnerSuspense-1 */}
       <Suspense>
-        <DataComp name="DataComp-1" wait={1000} />
+        <DataComp name="DataComp-1" wait={100} />
       </Suspense>
 
       <DataCompWithInnerSuspense
@@ -21,6 +21,11 @@ export default function Home() {
       <DataCompWithInnerSuspense
         name="DataCompWithInnerSuspense-2"
         wait={500}
+      />
+
+      <DataCompWithInnerSuspense
+        name="DataCompWithInnerSuspense-3"
+        wait={250}
       />
     </main>
   );
