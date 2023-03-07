@@ -1,4 +1,4 @@
-import { createResource, onCleanup, onMount, Suspense } from "solid-js";
+import { createResource, onCleanup, Suspense } from "solid-js";
 import { Title } from "solid-start";
 
 export default function Home() {
@@ -36,10 +36,6 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const resource = (name: string, wait: number) => {
   console.log(`call:${name}.resource`);
 
-  onMount(() => {
-    console.log(`onMount:${name}.resource`);
-  });
-
   onCleanup(() => {
     console.log(`onCleanup:${name}.resource`);
   });
@@ -58,10 +54,6 @@ const DataComp = (props: { name: string; wait: number }) => {
 
   const [data] = resource(props.name, props.wait);
 
-  onMount(() => {
-    console.log(`onMount:${props.name}`);
-  });
-
   onCleanup(() => {
     console.log(`onCleanup:${props.name}`);
   });
@@ -73,10 +65,6 @@ const DataCompWithInnerSuspense = (props: { name: string; wait: number }) => {
   console.log(`call:${props.name}`);
 
   const [data] = resource(props.name, props.wait);
-
-  onMount(() => {
-    console.log(`onMount:${props.name}`);
-  });
 
   onCleanup(() => {
     console.log(`onCleanup:${props.name}`);
